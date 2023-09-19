@@ -1,10 +1,15 @@
 const Input = (props) => {
-    const { type, name, classname, placeholder} = props
-    return (
-        <input name={name} type={type} className={classname}
-        placeholder={placeholder} />
-    )
-}
+  const { type, name, classname, placeholder } = props;
+  return (
+    <input
+      name={name}
+      type={type}
+      className={classname}
+      placeholder={placeholder}
+      id={name}
+    />
+  );
+};
 
 export default Input;
 
