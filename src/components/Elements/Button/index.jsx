@@ -1,14 +1,20 @@
 const Button = (props) => {
-    //default value bg-black
-    const { children, classname = "bg-black" } = props;
-    return (
-      <button
-        className={`h-10 px-6 font-semibold rounded-md ${classname } text-white`}
-        type="submit"
-      >
-        {children}
-      </button>
-    );
+  //default value bg-black
+  const {
+    children,
+    classname = "bg-black",
+    onClick = () => {},
+    type = "button",
+  } = props;
+  return (
+    <button
+      className={`h-10 px-6 font-semibold rounded-md ${classname} text-white`}
+      type={type}
+      onClick={() => onClick()}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;

@@ -1,9 +1,15 @@
 import InputForm from "../Elements/Input";
-import Button from "../Elements/Button"
+import Button from "../Elements/Button";
 
 const FormLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+    localStorage.setItem("email", e.target.email.value);
+    localStorage.setItem("password", e.target.password.value);
+    window.location.href = "/product"
+  };
   return (
-    <form action="">
+    <form onSubmit={handleLogin}>
       <InputForm
         label="Email"
         classname="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholder: opacity-100"
@@ -18,22 +24,11 @@ const FormLogin = () => {
         type="password"
         placeholder="*****"
       />
-      {/* <div className="mb-6">
-        <label
-          htmlFor="password"
-          className="block text-slate-700 text-sm font-bold mb-2"
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          className="tex-sm border rounded w-full py-2 px-3 text-slate-700 placeholder: opacity-50"
-          placeholder="******"
-        />
-      </div> */}
-      <Button classname="bg-blue-600 w-full">Sign In</Button>
+      <Button classname="bg-blue-600 w-full" type="submit">
+        Sign In
+      </Button>
     </form>
   );
 };
 
-export default FormLogin
+export default FormLogin;
