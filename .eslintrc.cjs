@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
@@ -10,6 +11,16 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
+  languageOptions: {
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+    globals: {
+      ...globals.browser,
+    },
+  },
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': [
