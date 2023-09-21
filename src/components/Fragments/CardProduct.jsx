@@ -25,8 +25,8 @@ const Body = (props) => {
         <h5 className="text-xl font-semibold tracking-tight text-white">
           {name}
         </h5>
-        <p className="text-m text-white">{children}</p>
       </a>
+      <p className="text-m text-white">{children}</p>
     </div>
   );
 };
@@ -42,7 +42,10 @@ const Footer = (props) => {
           minimumFractionDigits: 0,
         })}
       </span>
-      <Button classname="bg-blue-600 text-xs" onClick={() => handleAddToCart(id)}>
+      <Button
+        classname="bg-blue-600 text-xs"
+        onClick={() => handleAddToCart(id)}
+      >
         Add to Cart
       </Button>
     </div>

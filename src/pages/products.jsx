@@ -1,6 +1,6 @@
 import Button from "../components/Elements/Button";
 import CardProduct from "../components/Fragments/CardProduct";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const products = [
   {
@@ -31,6 +31,28 @@ const email = localStorage.getItem("email");
 
 const ProductPage = () => {
   const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || [])
+  },[])
+
+  //trigger update total setelah event add to cart di jalankan
+  // menghitung total keseluruhan
+  useEffect(() => {
+    if(cart.length > 0){
+      const sum = cart.reduce((acc, item) => {
+
+        const product = products.find(
+          (product) => product.id === item.id
+        );
+        return acc + item.qty * product.price;
+        }, 0)
+        setTotalPrice(sum)
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }
+  }, [cart])
+
   const handleLogout = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("password");
@@ -83,7 +105,7 @@ const ProductPage = () => {
           {cart.length > 0 && (
             <>
               <h1 className="text-3xl font-bold text-blue-600 mb-3">Cart</h1>
-              <table className="min-w-full border text-center text-sm font-light dark:border-neutral-500">
+              <table className="min-w-full border text-center text-sm font-light dark:border-neutral-500 table-auto">
                 <thead className="border-b font-medium dark:border-neutral-500">
                   <tr className="bg-gray-200">
                     <th
@@ -125,27 +147,56 @@ const ProductPage = () => {
                         <td className="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500 text-start">
                           {product.name}
                         </td>
-                        <td className="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500">
-                          {product.price.toLocaleString("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                            minimumFractionDigits: 0,
-                          })}
+                        <td className="flex justify-between whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500 text-end">
+                          <span>Rp.</span>
+                          <span>
+                            {product.price.toLocaleString("id-ID", {
+                              minimumFractionDigits: 0,
+                            })}
+                          </span>
                         </td>
                         <td className="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500">
                           {item.qty}
                         </td>
-                        <td className="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500">
-                          {(item.qty * product.price).toLocaleString("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                            minimumFractionDigits: 0,
-                          })}
+                        <td className="flex justify-between whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500 text-end">
+                          <span>Rp.</span>
+                          <span>
+                            {(item.qty * product.price).toLocaleString(
+                              "id-ID",
+                              {
+                                minimumFractionDigits: 0,
+                              }
+                            )}
+                          </span>
                         </td>
                       </tr>
                     );
                   })}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <th
+                      className="border-r px-6 py-4 dark:border-neutral-500 font-bold text-start"
+                      colSpan={3}
+                      rowSpan={1}
+                    >
+                      Total
+                    </th>
+                    <th
+                      className="border-r px-6 py-4 dark:border-neutral-500 text-end font-bold"
+                      colSpan={1}
+                      rowSpan={1}
+                    >
+                      {/* total keseluruhan */}
+                      {
+                        totalPrice.toLocaleString("id-ID", {
+                          style: "currency",
+                          currency: "IDR",
+                          minimumFractionDigits: 0,
+                        })}
+                    </th>
+                  </tr>
+                </tfoot>
               </table>
             </>
           )}
