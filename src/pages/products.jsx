@@ -2,7 +2,8 @@ import Button from "../components/Elements/Button";
 import CardProduct from "../components/Fragments/CardProduct";
 import { useEffect, useState } from "react";
 import { getProduct } from "../services/products.service";
-import { getUsername } from "../services/auth.service";
+// import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
 
 //simpan kedalam localstorage
 
@@ -10,18 +11,9 @@ const ProductPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([])
-  const [username, setUsername] = useState('')
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/login"
-    }else{ 
-      const data = getUsername(token)
-      // console.log(data);
-      setUsername(data.user)
-    }
-  },[])
+  //set value variable dari hooks login
+  const username = useLogin()  
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
