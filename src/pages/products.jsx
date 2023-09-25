@@ -1,8 +1,7 @@
 import Button from "../components/Elements/Button";
 import CardProduct from "../components/Fragments/CardProduct";
 import { useEffect, useState } from "react";
-import { getProduct } from "../services/products.service";
-// import { getUsername } from "../services/auth.service";
+import { getProducts } from "../services/products.service";
 import { useLogin } from "../hooks/useLogin";
 
 //simpan kedalam localstorage
@@ -17,9 +16,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem("cart")) || []);
-  }, []);
-
-  
+  }, []);  
 
   //trigger update total setelah event add to cart di jalankan
   // menghitung total keseluruhan
@@ -35,7 +32,7 @@ const ProductPage = () => {
   }, [cart, products]);
 
   useEffect(() => {
-    getProduct((data) => {
+    getProducts((data) => {
       setProducts(data);
     });
   }, []);
@@ -75,8 +72,8 @@ const ProductPage = () => {
         <div className="w-4/6 flex flex-wrap">
           {products.length > 0 && products.map((product) => (
             <CardProduct key={product.id}>
-              <CardProduct.Header image={product.image} />
-              <CardProduct.Body name={product.title}>
+              <CardProduct.Header id={product.id} image={product.image} />
+              <CardProduct.Body  id={product.id} name={product.title}>
                 {product.description}
               </CardProduct.Body>
               <CardProduct.Footer

@@ -7,6 +7,7 @@ import RegisterPage from './pages/register.jsx'
 import ErrorPage from './pages/404.jsx'
 import ProductPage from './pages/products'
 import ProfilePage from './pages/profile'
+import DetailProductPage from './pages/detailProduct'
 
 // definiton router
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <ProfilePage />
+  },
+  {
+    path: '/product/:id', //route dengan param 
+    element: <DetailProductPage />
   }
 ])
 
